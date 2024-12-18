@@ -1,6 +1,7 @@
 import type { Config } from "tailwindcss";
+import tailwindcssAnimate from "tailwindcss-animate";
 
-export default {
+const config: Config = {
     darkMode: ["class"],
     content: [
     "./pages/**/*.{js,ts,jsx,tsx,mdx}",
@@ -8,7 +9,6 @@ export default {
     "./app/**/*.{js,ts,jsx,tsx,mdx}",
   ],
   theme: {
-<<<<<<< HEAD
   	extend: {
   		fontFamily: {
   			'noto-sans-jp': [
@@ -63,18 +63,10 @@ export default {
   			md: 'calc(var(--radius) - 2px)',
   			sm: 'calc(var(--radius) - 4px)'
   		}
-  	}
-=======
-    extend: {
-      fontFamily: {
-        'noto-sans-jp': ['var(--font-noto-sans-jp)', 'sans-serif'],
-      },
-      colors: {
-        background: "var(--background)",
-        foreground: "var(--foreground)",
-      },
-    },
->>>>>>> origin/main
-  },
-  plugins: [require("tailwindcss-animate")],
-} satisfies Config;
+		},
+	},
+  plugins: [tailwindcssAnimate],
+  // plugins: [require("tailwindcss-animate")],
+};
+
+export default config;

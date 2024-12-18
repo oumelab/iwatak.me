@@ -8,6 +8,7 @@ export default {
     "./app/**/*.{js,ts,jsx,tsx,mdx}",
   ],
   theme: {
+<<<<<<< HEAD
   	extend: {
   		fontFamily: {
   			'noto-sans-jp': [
@@ -63,6 +64,17 @@ export default {
   			sm: 'calc(var(--radius) - 4px)'
   		}
   	}
+=======
+    extend: {
+      fontFamily: {
+        'noto-sans-jp': ['var(--font-noto-sans-jp)', 'sans-serif'],
+      },
+      colors: {
+        background: "var(--background)",
+        foreground: "var(--foreground)",
+      },
+    },
+>>>>>>> origin/main
   },
   plugins: [require("tailwindcss-animate")],
 } satisfies Config;

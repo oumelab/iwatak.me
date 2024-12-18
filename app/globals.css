@@ -111,6 +111,7 @@ body {
   }
 }
 
+<<<<<<< HEAD
 @layer base {
   * {
     @apply border-border;
@@ -118,4 +119,10 @@ body {
   body {
     @apply bg-background text-foreground;
   }
+=======
+body {
+  color: var(--foreground);
+  background: var(--background);
+  /* font-family: Arial, Helvetica, "Hiragino Kaku Gothic ProN","Hiragino Sans", Meiryo, sans-serif; */
+>>>>>>> origin/main
 }

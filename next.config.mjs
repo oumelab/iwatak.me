@@ -1,7 +1,8 @@
-import type { NextConfig } from "next";
+// import type { NextConfig } from "next";
 import createMDX from "@next/mdx";
+import rehypePrettyCode from "rehype-pretty-code";
 
-const nextConfig: NextConfig = {
+const nextConfig = {
   /* config options here */
   // Configure `pageExtensions` to include markdown and MDX files
   pageExtensions: ['js', 'jsx', 'md', 'mdx', 'ts', 'tsx'],
@@ -9,6 +10,10 @@ const nextConfig: NextConfig = {
 
 const withMDX = createMDX({
   // Add markdown plugins here, as desired
+  // extension: /\.mdx?$/,
+  options: {
+    rehypePlugins: [rehypePrettyCode],
+  },
 })
 
-export default withMDX(nextConfig);
+export default withMDX(nextConfig)

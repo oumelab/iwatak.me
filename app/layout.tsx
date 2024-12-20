@@ -1,5 +1,5 @@
-import type { Metadata } from "next";
-import { Noto_Sans_JP } from "next/font/google";
+import type {Metadata} from "next";
+import {Noto_Sans_JP} from "next/font/google";
 import "./globals.css";
 import Header from "@/components/header";
 
@@ -8,7 +8,12 @@ const notoSansJp = Noto_Sans_JP({
   variable: "--font-noto-sans-jp",
   preload: false,
   display: "swap",
-  fallback: ["Hiragino Kaku Gothic ProN","Hiragino Sans", "Meiryo", "sans-serif"],
+  fallback: [
+    "Hiragino Kaku Gothic ProN",
+    "Hiragino Sans",
+    "Meiryo",
+    "sans-serif",
+  ],
 });
 
 export const metadata: Metadata = {
@@ -22,10 +27,15 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="ja" className={`${notoSansJp.variable}  font-noto-sans-jp antialiased`}>
+    <html
+      lang="ja"
+      className={`${notoSansJp.variable}  font-noto-sans-jp antialiased`}
+    >
       <body>
         <Header />
-        {children}
+        <main className="max-w-[1024px] mx-auto px-6 py-8">
+          {children}
+        </main>
       </body>
     </html>
   );

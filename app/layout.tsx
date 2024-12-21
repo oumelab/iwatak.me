@@ -2,6 +2,7 @@ import type {Metadata} from "next";
 import {Noto_Sans_JP} from "next/font/google";
 import "./globals.css";
 import Header from "@/components/header";
+import { ThemeProvider } from "@/components/theme-provider"
 
 const notoSansJp = Noto_Sans_JP({
   subsets: ["latin"],
@@ -32,10 +33,15 @@ export default function RootLayout({
       className={`${notoSansJp.variable}  font-noto-sans-jp antialiased`}
     >
       <body>
-        <Header />
-        <main className="max-w-[1024px] mx-auto px-6 py-8">
-          {children}
-        </main>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          <Header />
+          <main className="max-w-[1024px] mx-auto px-6 py-8">{children}</main>
+        </ThemeProvider>
       </body>
     </html>
   );

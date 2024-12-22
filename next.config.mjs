@@ -9,6 +9,7 @@ const nextConfig = {
 };
 
 const withMDX = createMDX({
+  extension: /\.mdx?$/,
   options: {
     remarkPlugins: [remarkGfm],
     rehypePlugins: [[rehypePrettyCode, { theme: 'github-dark',},],],

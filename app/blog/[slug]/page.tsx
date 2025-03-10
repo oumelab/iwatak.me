@@ -6,10 +6,10 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
   
 
   return (
-    <div className="prose dark:prose-invert">
+    <div className="prose dark:prose-invert mx-auto">
     {post && (
       <> 
-      <h1>{post.title}</h1>
+      <h1 className="text-[28px]">{post.title}</h1>
       <p>{post.createdAt}</p>
       <post.content />
       </>

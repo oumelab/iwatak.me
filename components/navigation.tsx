@@ -8,7 +8,6 @@ import Link from "next/link";
 const links = [
   { href: "/about", label: "About" },
   { href: "/blog", label: "Blog" },
-  { href: "/contact", label: "Contact" },
 ];
 
 export default function Navigation() {

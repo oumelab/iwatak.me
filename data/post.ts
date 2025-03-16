@@ -22,3 +22,17 @@ export const getPost = async (slug: string): Promise<Post> => {
 export const getAllPosts = async (): Promise<Post[]> => {
   return await Promise.all(PostSlugs.map(async (slug) => getPost(slug)));
 };
+
+export const getPostList = async (): Promise<Omit<Post, 'content'>[]> => {
+  const posts = await Promise.all(PostSlugs.map(async (slug) => {
+    const post = await import(`/app/blog/${slug}.mdx`);
+    const { title, createdAt } = post.metadata;
+    return {
+      slug,
+      title,
+      createdAt,
+    };
+  })
+  );
+  return posts;
+}

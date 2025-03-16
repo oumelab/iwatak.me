@@ -1,23 +1,19 @@
-import { getAllPosts } from "@/data/post";
-import Link from "next/link";
+import { getPostList } from "@/data/post";
+import Pagination from "@/components/pagination";
+import PostList from "@/components/post-list";
 
 export default async function Page() {
-  const posts = await getAllPosts();
+  const posts = await getPostList();
+  const postsPerPage = 3;
+ 
   return (
     <div className="max-w-[580px] mx-auto py-2">
       <h1 className="font-bold text-2xl">Blog</h1>
 
-      <ul className="mt-6 pl-4 space-y-2 list-disc">
-        {posts.map((post) => (
-          <li className="relative" key={post.slug}>
-            <div className="flex items-center gap-2">
-            <h2 className="text-lg">{post.title}</h2>
-            <p>{post.createdAt}</p>
-            </div>
-            <Link href={`/blog/${post.slug}/`} className="absolute inset-0"></Link>
-          </li>
-        ))}
+      <ul className="my-10 pl-4 space-y-2 list-disc">
+        <PostList posts={posts} postsPerPage={postsPerPage} />
       </ul>
+      <Pagination totalPosts={posts.length} defaultPostsPerPage={postsPerPage} delta={2} />
     </div>
   )
 }

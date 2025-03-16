@@ -19,14 +19,13 @@ export default function PostList({
     setCurrentPage(parseInt(page));
   }, [searchParams]);
 
+  // Get paginated posts
+  const startIndex = (currentPage - 1) * postsPerPage;
+  const paginatedPosts = posts.slice(startIndex, startIndex + postsPerPage);
+
   return (
     <>
-      {posts
-        ?.filter((_, index) => {
-          const startIndex = (currentPage - 1) * postsPerPage;
-          const endIndex = startIndex + postsPerPage;
-          return index >= startIndex && index < endIndex;
-        })
+        {paginatedPosts
         .map((post) => (
           <li className="relative w-fit" key={post.slug}>
             <div className="flex items-center gap-2">

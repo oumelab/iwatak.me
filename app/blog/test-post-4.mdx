@@ -1,0 +1,31 @@
+export const metadata ={
+  title: 'テスト投稿4',
+  createdAt: '2025-03-14',
+}
+
+テスト投稿4
+
+## テスト投稿4
+
+テスト投稿です。テスト投稿です。テスト投稿です。テスト投稿です。テスト投稿です。テスト投稿です。テスト投稿です。テスト投稿です。テスト投稿です。テスト投稿です。テスト投稿です。テスト投稿です。
+
+```ts
+
+export default function RootLayout({
+  children,
+  modal
+}: Readonly<{
+  children: React.ReactNode;
+  modal: React.ReactNode;
+}>) {
+  return (
+    <html lang="jp">
+      <body className={inter.className}>        
+        {children}       
+        {modal}
+      </body>
+    </html>
+  );
+}
+
+```

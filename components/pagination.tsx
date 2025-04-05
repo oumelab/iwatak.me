@@ -1,6 +1,5 @@
 'use client';
 
-// import Link from "next/link";
 import { paginate } from "@/lib/paginate";
 import {
   Pagination as _Pagination,

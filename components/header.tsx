@@ -9,7 +9,7 @@ export default function Header() {
         <h1 className="font-bold text-xl">
           <Link href="/">oumelab.com</Link>
         </h1>
-        <div className="flex items-center gap-6">
+        <div className="flex items-center gap-2">
           <Navigation />
           <ModeToggle />
         </div>

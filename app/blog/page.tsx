@@ -1,9 +1,9 @@
-import { getPostList } from "@/data/post";
+import { getAllPosts } from "@/data/post";
 import Pagination from "@/components/pagination";
 import PostList from "@/components/post-list";
 
 export default async function Page() {
-  const posts = await getPostList();
+  const posts = await getAllPosts();
   const postsPerPage = 3;
  
   return (

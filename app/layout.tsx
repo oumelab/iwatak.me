@@ -40,7 +40,7 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           <Header />
-          <main className="max-w-3xl mx-auto px-5 py-8">{children}</main>
+          <main className="max-w-3xl mx-auto px-5 py-16">{children}</main>
         </ThemeProvider>
       </body>
     </html>

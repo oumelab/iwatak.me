@@ -1,0 +1,40 @@
+export const metadata ={
+  title: 'WebサイトをVercel にデプロイして Cloudflare のドメインを使う',
+  createdAt: new Date(2025, 4, 28),
+}
+
+## Next.js でWebサイトを作った
+ポートフォリオと学習メモブログのためにこのWebサイトを作った。<br />
+- Next.js 14 Appp Router
+- Tailwind CSS
+- MDX
+- shadcn/ui
+
+`Astro` と迷ったけど、`Next.js` の学習に力を入れたかったので選択。あちこち調べながら、何とかここまで出来た。<br />
+## とにかく公開する
+
+ドメインを `Cloudflare` で取得したのでデプロイも `Cloudflare` にしたかった。が、`SSR` など使っているせいかデプロイを何度やってもコケてしまうため一旦断念。課題として保留。<br />
+公開を最優先するため、素直に `Vercel` にデプロイした。<br />
+`Cloudflare` も全然分からないけど `Vercel` の機能も沢山あって全然知らないことに気づく。<br />
+[Hobby Plan](https://vercel.com/docs/plans/hobby) で出来ること色々試してみたい。
+
+## Cloudflare のドメインを使う
+
+複雑な手順かと思いきや、`Vercel` の `Project > Settings > Domains` で普通にドメインを追加するだけ。後は自動で `Cloudflare` のページに飛んだりして、あっという間に完了。<br />
+
+一点だけ、`www` サブドメインをどうするか聞かれて、おすすめマーク付きの方を選択したら、`wwwなし` => `wwwあり` にリダイレクトするように設定された。<br />自分は逆にしたかったので `Domains` で設定しなおした。<br />
+
+## まずは中身を頑張ろう
+
+とりあえず公開したけど中身がない。<br />
+中身をどんどん入れつつ、色々いじりつつ、学んだことなどここにメモしていく。
+
+## 参考
+
+記事などを参考にさせていただきました🙌<br />
+
+
+- [How to use markdown and MDX in Next.js](https://nextjs.org/docs/app/guides/mdx)
+- [MDXブログを作る with Next.js, shiki - スピード開発 Part 2](https://www.youtube.com/live/J3Ea6fhkrr0?si=DIIB9X4TmpKL1qjG)
+- [Rehype Pretty Code](https://rehype-pretty.pages.dev/)
+- [VercelとCloudflare連携：爆速Webサイト構築ガイド【初心者向け】](https://www.smile-comfort.com/media/vercel-cloudflare-guide)

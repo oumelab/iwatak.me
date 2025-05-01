@@ -1,82 +1,83 @@
-import { Post } from '@/types/post';
+import "server-only";
+import {Post} from "@/types/post";
 import fs from "fs";
-import { notFound } from 'next/navigation';
-import path from 'path';
-import 'server-only';
-// import { PostSlugs } from './post-slug';
+import {notFound} from "next/navigation";
+import path from "path";
+import { compareDesc } from "date-fns";
 
+
+// 投稿ディレクトリのパス
 const postsDirectory = path.join(process.cwd(), "/app/blog");
 
+// 投稿ディレクトリからファイル名を取得する
 const getFileNames = (): string[] => {
-  const allNames = fs.readdirSync(postsDirectory);
-  const fileNames = allNames.filter(name => name.includes(".mdx"));
-  return fileNames;
-};
-// const allNames = fs.readdirSync(postsDirectory);
-// const fileNames = allNames.filter(name => name.includes(".mdx"));
+  try {
+    const allNames = fs.readdirSync(postsDirectory);
 
-// export const getPost = async (slug: string): Promise<Post> => {
-//   if (!PostSlugs.includes(slug)) {
-//     notFound();
-//   }
-//   const post = await import(`/app/blog/${slug}.mdx`);
-
-//   const { title, createdAt } = post.metadata;
-
-//   return {
-//     slug,
-//     title,
-//     createdAt,
-//     content: post.default,
-//   };
-// };
-
-// export const getAllPosts = async (): Promise<Post[]> => {
-//   return await Promise.all(PostSlugs.map(async (slug) => getPost(slug)));
-// };
-
-// export const getPostList = async (): Promise<Omit<Post, 'content'>[]> => {
-//   const posts = await Promise.all(PostSlugs.map(async (slug) => {
-//     const post = await import(`/app/blog/${slug}.mdx`);
-//     const { title, createdAt } = post.metadata;
-//     return {
-//       slug,
-//       title,
-//       createdAt,
-//     };
-//   })
-//   );
-//   return posts;
-// }
-
-export const getPost = async (slug: string): Promise<Post> => {
-  const fileNames = getFileNames();
-  const postSlugs = fileNames.map(fileName => fileName.replace(/\.mdx$/, ""));
-  if (!postSlugs.includes(slug)) {
-    notFound();
+    const fileNames = allNames.filter((name) => name.endsWith(".mdx"));
+    return fileNames;
+  } catch (error) {
+    console.error("記事の取得に失敗しました:", error);
+    return [];
   }
-  const post = await import(`/app/blog/${slug}.mdx`);
-  const { title, createdAt } = post.metadata;
-  return {
-    slug,
-    title,
-    createdAt,
-    content: post.default,
-  };
-}
+};
 
-export const getAllPosts = async(): Promise<Omit<Post, 'content'>[]> => {
-  const fileNames = getFileNames();
-  const posts = await Promise.all(fileNames.map(async (fileName) => {
+// 記事メタデータを取得
+const getPostMetadata = async (
+  fileName: string
+): Promise<Omit<Post, "content">> => {
+  try {
     const post = await import(`/app/blog/${fileName}`);
-    const { title, createdAt } = post.metadata;
+    const {title, createdAt} = post.metadata;
     return {
       slug: fileName.replace(/\.mdx$/, ""),
       title,
       createdAt,
     };
-  })
-  );
-  return posts;
-  
-}
+  } catch (error) {
+    console.error(`記事ファイル "${fileName}" のメタデータ取得に失敗しました:`, error);
+    throw error;
+  }
+};
+
+// 記事詳細を取得
+export const getPost = async (slug: string): Promise<Post> => {
+  try {
+    const fileNames = getFileNames();
+    const postSlugs = fileNames.map((fileName) =>
+      fileName.replace(/\.mdx$/, "")
+    );
+    if (!postSlugs.includes(slug)) {
+      notFound();
+    }
+    const fileName = `${slug}.mdx`;
+    const metadata = await getPostMetadata(fileName);
+    const post = await import(`/app/blog/${fileName}`);
+
+    return {
+      ...metadata,
+      content: post.default,
+    };
+  } catch (error) {
+    console.error(`記事 "${slug}" の取得に失敗しました:`, error);
+    notFound();
+  }
+};
+
+// 投稿一覧を取得
+export const getAllPosts = async (): Promise<Omit<Post, "content">[]> => {
+  try {
+    const fileNames = getFileNames();
+    const posts = await Promise.all(
+      fileNames.map(async (fileName) => getPostMetadata(fileName))
+    );
+    // 投稿日の降順にソート
+    const sortedPosts = posts.sort((a, b) => {
+      return compareDesc(a.createdAt, b.createdAt);
+    });
+    return sortedPosts;
+  } catch (error) {
+    console.error("記事一覧の取得に失敗しました:", error);
+    return [];
+  }
+};

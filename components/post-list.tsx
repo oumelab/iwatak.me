@@ -3,6 +3,7 @@ import {useEffect, useState} from "react";
 import {useSearchParams} from "next/navigation";
 import type {Post} from "@/types/post";
 import Link from "next/link";
+import {format} from "date-fns";
 
 export default function PostList({
   posts,
@@ -27,10 +28,10 @@ export default function PostList({
     <>
         {paginatedPosts
         .map((post) => (
-          <li className="relative w-fit" key={post.slug}>
-            <div className="flex items-center gap-2">
+          <li className="relative w-fit space-y-6" key={post.slug}>
+            <div className="flex flex-col gap-1">
               <h2 className="text-lg">{post.title}</h2>
-              <p>{post.createdAt}</p>
+              <p>({format(post.createdAt, "yyyy/MM/dd")})</p>
             </div>
             <Link
               href={`/blog/${post.slug}/`}

@@ -134,4 +134,17 @@
   body {
     @apply bg-background text-foreground;
   }
+  p > code {
+    display: inline-block;
+    background: var(--color-accent);
+    padding-inline: 0.5rem;
+    line-height: 1.5rem;
+    height: 1.5rem;
+    border-radius: 0.25rem;
+    font-weight: normal!important;
+  }
+  p > code::before,
+  p > code::after {
+    display: none;
+  }
 }

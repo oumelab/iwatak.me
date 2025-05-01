@@ -4,7 +4,7 @@ import PostList from "@/components/post-list";
 
 export default async function Page() {
   const posts = await getAllPosts();
-  const postsPerPage = 3;
+  const postsPerPage = 10;
  
   return (
     <div className="w-full mx-auto py-2">

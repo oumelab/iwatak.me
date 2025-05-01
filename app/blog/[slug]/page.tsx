@@ -1,4 +1,5 @@
 import { getPost } from "@/data/post";
+import { format } from "date-fns";
 
 export default async function Page({ params }: { params: Promise<{ slug: string }> }) {
   const slug = (await params).slug;
@@ -10,7 +11,7 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
     {post && (
       <> 
       <h1 className="text-[28px]">{post.title}</h1>
-      <p>{post.createdAt}</p>
+      <p>投稿日 {format(post.createdAt, "yyyy/MM/dd")}</p>
       <post.content />
       </>
     )}

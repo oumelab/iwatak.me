@@ -56,7 +56,7 @@ export const getPost = async (slug: string): Promise<Post> => {
 
     return {
       ...metadata,
-      content: post.default,
+      content: post.default as () => React.ReactNode,
     };
   } catch (error) {
     console.error(`記事 "${slug}" の取得に失敗しました:`, error);

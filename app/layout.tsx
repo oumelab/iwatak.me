@@ -3,6 +3,7 @@ import {Noto_Sans_JP} from "next/font/google";
 import "./globals.css";
 import Header from "@/components/header";
 import { ThemeProvider } from "@/components/theme-provider"
+import Footer from "@/components/footer";
 
 const notoSansJp = Noto_Sans_JP({
   subsets: ["latin"],
@@ -32,7 +33,7 @@ export default function RootLayout({
       lang="ja"
       className={`${notoSansJp.variable}  font-noto-sans-jp antialiased`}
     >
-      <body>
+      <body className="min-h-screen">
         <ThemeProvider
           attribute="class"
           defaultTheme="system"
@@ -41,6 +42,7 @@ export default function RootLayout({
         >
           <Header />
           <main className="max-w-3xl mx-auto px-5 py-16">{children}</main>
+          <Footer />
         </ThemeProvider>
       </body>
     </html>

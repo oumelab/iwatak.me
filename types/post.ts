@@ -2,7 +2,7 @@
 export type Post = {
   slug: string;
   title: string;
-  createdAt: Date;
-  updatedAt?: Date;
+  createdAt: string | Date;
+  updatedAt?: string | Date;
   content: () => React.ReactNode;
 };

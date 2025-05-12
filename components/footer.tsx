@@ -5,7 +5,7 @@ import { GITHUB_URL, X_URL } from "@/constants";
 
 export default function Footer() {
   return (
-    <footer className="sticky top-full py-4 border border-t">
+    <footer className="sticky top-full py-4 border border-t px-5">
       <div className="max-w-3xl mx-auto flex items-center justify-between">
         <small className="text-muted-foreground">&copy; oumelab</small>
         <div className="flex items-center gap-2">

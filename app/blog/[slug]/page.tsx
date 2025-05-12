@@ -1,9 +1,17 @@
 import { getPost } from "@/data/post";
-import { format } from "date-fns";
+import { format, parse } from "date-fns";
+import { ja } from "date-fns/locale";
 
 export default async function Page({ params }: { params: Promise<{ slug: string }> }) {
   const slug = (await params).slug;
   const post = await getPost(slug);
+
+  const ensureDate = (dateValue: string | Date) => {
+    if (typeof dateValue === "string") {
+    return parse(dateValue, "yyyy-MM-dd", new Date());
+    }
+    return dateValue;
+  };
   
 
   return (
@@ -11,7 +19,7 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
     {post && (
       <> 
       <h1 className="text-[28px]">{post.title}</h1>
-      <p>投稿日 {format(post.createdAt, "yyyy/MM/dd")}</p>
+      <p>投稿日 {format(ensureDate(post.createdAt), "yyyy年MM月dd日", { locale: ja })}</p>
       <post.content />
       </>
     )}

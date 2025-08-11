@@ -131,9 +131,9 @@
   * {
     @apply border-border outline-ring/50;
   }
-  body {
+  /* body {
     @apply bg-background text-foreground;
-  }
+  } */
   p > code {
     display: inline-block;
     background: var(--color-accent);

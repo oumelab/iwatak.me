@@ -19,7 +19,7 @@ const notoSansJp = Noto_Sans_JP({
 });
 
 export const metadata: Metadata = {
-  title: "oumelab",
+  title: "iwatak.me",
   description: "Web Development Learning Note",
 };
 

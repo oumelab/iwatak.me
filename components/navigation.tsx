@@ -10,13 +10,12 @@ import { Button } from "./ui/button";
 interface Link {
   href: string;
   label: string;
-  icon?: React.ReactNode;
 }
 
 const links = [
   {href: "/about", label: "About"},
   {href: "/blog", label: "Blog"},
-  {href: GITHUB_URL, label: "Github", icon: <GitHubIcon />},
+  {href: GITHUB_URL, label: "Github"},
 ];
 
 export default function Navigation() {
@@ -35,9 +34,15 @@ export default function Navigation() {
               variant="ghost"
               asChild
             >
-              <Link href={link.href} className="fill-current">
-                {link.icon ? link.icon : link.label}
-              </Link>
+              {link.href.includes("github") ? (
+                <Link href={link.href} target="_blank" rel="noopener noreferrer">
+                  <GitHubIcon className="size-4 fill-current" />
+                </Link>
+              ) : (
+                <Link href={link.href}>
+                  {link.label}
+                </Link>
+              )}
             </Button>
           </li>
         ))}

@@ -3,6 +3,7 @@
 import { Check, Clipboard } from 'lucide-react';
 import { DetailedHTMLProps, HTMLAttributes, useRef, useState } from 'react';
 import { Button } from '../ui/button';
+import { cn } from '@/lib/utils';
 
 export default function Pre({
   children,
@@ -29,9 +30,9 @@ export default function Pre({
       <Button
         disabled={isCopied}
         onClick={handleClickCopy}
-        className='absolute top-4 right-4 size-8 grid place-content-center dark:bg-zinc-900 dark:text-muted-foreground rounded-sm cursor-pointer'
+        className={cn('group absolute top-4 right-4 size-8 grid place-content-center text-zinc-400 bg-transparent hover:text-white hover:bg-zinc-700 dark:hover:bg-zinc-900 dark:text-muted-foreground dark:hover:text-white focus-within:text-white focus-within:bg-zinc-700 dark:focus-within:bg-zinc-900 rounded-sm cursor-pointer', isCopied && 'text-white bg-zinc-700 dark:bg-zinc-900')}
       >
-        {isCopied ? <Check className="text-muted dark:text-muted-foreground" /> : <Clipboard className="text-muted-foreground dark:text-muted-foreground" />}
+        {isCopied ? <Check className="text-white" /> : <Clipboard className="" />}
       </Button>
       {children}
     </pre>

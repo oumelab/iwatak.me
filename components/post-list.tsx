@@ -30,13 +30,12 @@ export default function PostList({
         .map((post) => (
           <li className="relative w-fit space-y-6" key={post.slug}>
             <div className="flex flex-col gap-1">
-              <h2 className="text-lg">{post.title}</h2>
-              <p>({format(post.createdAt, "yyyy/MM/dd")})</p>
-            </div>
-            <Link
+              <h2><Link
               href={`/blog/${post.slug}/`}
-              className="absolute inset-0"
-            ></Link>
+              className="underline-rounded"
+            >{post.title}</Link></h2>
+              <p className="text-sm text-muted-foreground">({format(post.createdAt, "yyyy/MM/dd")})</p>
+            </div>
           </li>
         ))}
     </>

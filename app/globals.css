@@ -1,14 +1,14 @@
-@import 'tailwindcss';
+@import "tailwindcss";
 @import "tw-animate-css";
 @plugin "@tailwindcss/typography";
- 
+
+
 @custom-variant dark (&:is(.dark *));
 /*
   ---break---
 */
 /* @custom-variant dark (&:is(.dark *)); */
 
-/* @config '../tailwind.config.ts'; */
 
 /*
   The default border color has changed to `currentcolor` in Tailwind CSS v4,
@@ -51,6 +51,7 @@
   --sidebar-accent-foreground: oklch(0.21 0.006 285.885);
   --sidebar-border: oklch(0.92 0.004 286.32);
   --sidebar-ring: oklch(0.705 0.015 286.067);
+  --underline-hover: oklch(0.21 0.006 285.885);
 }
 
 .dark {
@@ -85,8 +86,8 @@
   --sidebar-accent-foreground: oklch(0.985 0 0);
   --sidebar-border: oklch(1 0 0 / 10%);
   --sidebar-ring: oklch(0.552 0.016 285.938);
+  --underline-hover: oklch(0.7348 0 0);
 }
-
 
 @theme inline {
   --color-background: var(--background);
@@ -126,14 +127,12 @@
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-ring: var(--sidebar-ring);
 }
- 
+
 @layer base {
   * {
     @apply border-border outline-ring/50;
   }
-  /* body {
-    @apply bg-background text-foreground;
-  } */
+
   p > code {
     display: inline-block;
     background: var(--color-accent);
@@ -141,10 +140,72 @@
     line-height: 1.5rem;
     height: 1.5rem;
     border-radius: 0.25rem;
-    font-weight: normal!important;
+    font-weight: normal !important;
   }
   p > code::before,
   p > code::after {
     display: none;
   }
+
+}
+
+@layer components {
+  /* https://codepen.io/pxco/pen/GRzemVV */
+  :is(.underline-rounded, .prose :where(a)) {
+    padding: 2px 0 3px;
+    text-decoration: none;
+    --underline-offset: 4px;
+    --underline-thickness: 2px;
+    --underline-color: gray;
+
+    --bg-pos: calc(1em + var(--underline-offset) + 1px);
+    --bg-circle: var(--underline-color);
+    --left: calc(var(--underline-thickness) / 2);
+    --width: calc(100% - var(--underline-thickness));
+
+    --bg-line: linear-gradient(var(--underline-color), var(--underline-color))
+      no-repeat var(--left) var(--bg-pos) / var(--width)
+      var(--underline-thickness);
+
+    --bg-left: radial-gradient(
+        var(--underline-thickness) circle at center,
+        var(--bg-circle) 50%,
+        transparent 51%
+      )
+      no-repeat left var(--bg-pos) / var(--underline-thickness)
+      var(--underline-thickness);
+
+    --bg-right: radial-gradient(
+        var(--underline-thickness) circle at center,
+        var(--bg-circle) 50%,
+        transparent 51%
+      )
+      no-repeat right var(--bg-pos) / var(--underline-thickness)
+      var(--underline-thickness);
+    --bg-rounded-underline: var(--bg-left), var(--bg-right), var(--bg-line);
+
+    background: var(--bg-rounded-underline);
+    box-decoration-break: clone;
+
+    transition: 160ms ease-out;
+    transition-property: --underline-color;
+
+    &:is(:hover, :focus-visible) {
+      --underline-color: var(--underline-hover);
+    }
+  }
+}
+
+
+@layer utilities {
+  .prose {
+    --tw-prose-counters: var(--color-foreground);
+    --tw-prose-bullets: var(--color-foreground);
+    --tw-prose-invert-counters: var(--color-foreground);
+    --tw-prose-invert-bullets: var(--color-foreground);
+  }
+  .prose a {
+    text-decoration: none;
+  }
+
 }

@@ -1,5 +1,5 @@
 学んだことのメモ・雑記ブログ<br />
-<a href="https://oumelab.com/" target="_blank">https://oumelab.com/</a>
+<a href="https://iwatak.me/" target="_blank" rel="noopener noreferrer">https://iwatak.me/</a>
 
 - Next.js
 - Tailwind CSS, shadcn/ui

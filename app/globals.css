@@ -236,25 +236,25 @@
   }
 
   /* ▼デフォルト＝ライト */
-  .prose pre code[data-theme*=" "],
-  .prose pre code[data-theme*=" "] span {
+  .prose pre code[data-theme~="github-light"],
+  .prose pre code[data-theme~="github-light"] span {
     color: var(--shiki-light);
   }
 
   /* ▼ダーク時は .dark でダーク用の変数に切替 */
-  html.dark .prose pre code[data-theme*=" "],
-  html.dark .prose pre code[data-theme*=" "] span {
+  html.dark .prose pre code[data-theme~="github-dark"],
+  html.dark .prose pre code[data-theme~="github-dark"] span {
     color: var(--shiki-dark);
   }
 
   /* ★背景は code 側に塗る（変数が code にある前提） */
-  code[data-theme*=" "] {
+  /* code[data-theme*="github-light"] {
     background-color: var(--shiki-light-bg) !important;
-    display: block; /* pre のパディング・角丸を使うなら省略可 */
-  }
-  html.dark code[data-theme*=" "] {
+    display: block; pre のパディング・角丸を使うなら省略可 */
+  /* } */
+  /* html.dark code[data-theme~="github-dark"] {
     background-color: var(--shiki-dark-bg) !important;
-  }
+  } */
 
   /* ダークモード時だけ .prose の配色を上書き（コードブロックの背景はさわらない） */
   html.dark .prose {

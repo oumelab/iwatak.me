@@ -2,13 +2,7 @@
 @import "tw-animate-css";
 @plugin "@tailwindcss/typography";
 
-
 @custom-variant dark (&:is(.dark *));
-/*
-  ---break---
-*/
-/* @custom-variant dark (&:is(.dark *)); */
-
 
 /*
   The default border color has changed to `currentcolor` in Tailwind CSS v4,
@@ -52,6 +46,8 @@
   --sidebar-border: oklch(0.92 0.004 286.32);
   --sidebar-ring: oklch(0.705 0.015 286.067);
   --underline-hover: oklch(0.21 0.006 285.885);
+  --color-pre-bg: oklch(0.9782 0.0034 247.86); /* #f6f8fa */
+  --color-pre-code: oklch(0.278 0.0117 248.24); /* #e1e4e8 */
 }
 
 .dark {
@@ -87,6 +83,8 @@
   --sidebar-border: oklch(1 0 0 / 10%);
   --sidebar-ring: oklch(0.552 0.016 285.938);
   --underline-hover: oklch(0.7348 0 0);
+  --color-pre-bg: oklch(0.278 0.0117 248.24); /* #24292e */
+  --color-pre-code: oklch(0.7829 0.0235 248.13); /* #adbac7 */
 }
 
 @theme inline {
@@ -126,6 +124,8 @@
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-ring: var(--sidebar-ring);
+  --color-pre-bg: var(--color-pre-bg);
+  --color-pre-code: var(--color-pre-code);
 }
 
 @layer base {
@@ -147,6 +147,13 @@
     display: none;
   }
 
+  /* コードブロックのキャプション */
+  figure[data-rehype-pretty-code-figure] {
+    @apply relative;
+  }
+  figcaption[data-rehype-pretty-code-caption] {
+    @apply absolute inset-0 w-full h-fit pl-4 pb-2 text-sm border-b border-border z-[1];
+  }
 }
 
 @layer components {
@@ -196,16 +203,73 @@
   }
 }
 
-
 @layer utilities {
   .prose {
     --tw-prose-counters: var(--color-foreground);
     --tw-prose-bullets: var(--color-foreground);
     --tw-prose-invert-counters: var(--color-foreground);
     --tw-prose-invert-bullets: var(--color-foreground);
+    --tw-prose-background: #333;
   }
   .prose a {
     text-decoration: none;
   }
 
+  /* 1) code 側の背景は常に透明（Shikiや既存CSSの背景を打ち消す） */
+  pre > code[data-theme] {
+    background: transparent !important;
+  }
+  pre > code[data-theme] span {
+    background: transparent !important; /* 行ハイライト背景を使っていなければ付けてもOK */
+  }
+
+  /* 2) pre にだけ “手動の” 背景色を付ける（ライト／ダークを明示） */
+  /* GitHub Light のコードブロック相当: #f6f8fa（#ffffff を変更） */
+  .prose pre {
+    background-color: #f6f8fa !important;
+    padding-top: 4rem; /* キャプションの高さ */
+  }
+
+  /* GitHub Dark Dimmed 相当の背景: #22272e（Dark相当なら #0d1117） */
+  html.dark .prose pre {
+    background-color: #24292e !important;
+  }
+
+  /* ▼デフォルト＝ライト */
+  .prose pre code[data-theme*=" "],
+  .prose pre code[data-theme*=" "] span {
+    color: var(--shiki-light);
+  }
+
+  /* ▼ダーク時は .dark でダーク用の変数に切替 */
+  html.dark .prose pre code[data-theme*=" "],
+  html.dark .prose pre code[data-theme*=" "] span {
+    color: var(--shiki-dark);
+  }
+
+  /* ★背景は code 側に塗る（変数が code にある前提） */
+  code[data-theme*=" "] {
+    background-color: var(--shiki-light-bg) !important;
+    display: block; /* pre のパディング・角丸を使うなら省略可 */
+  }
+  html.dark code[data-theme*=" "] {
+    background-color: var(--shiki-dark-bg) !important;
+  }
+
+  /* ダークモード時だけ .prose の配色を上書き（コードブロックの背景はさわらない） */
+  html.dark .prose {
+    --tw-prose-body: var(--color-foreground); /* 段落文字 */
+    --tw-prose-headings: #ffffff; /* 見出し */
+    --tw-prose-links: #ffffff; /* aリンク */
+    --tw-prose-bold: #ffffff; /* strong/b */
+    --tw-prose-counters: #9ca3af;
+    --tw-prose-bullets: #9ca3af;
+    --tw-prose-hr: #374151; /* hr */
+    --tw-prose-quotes: #e5e7eb;
+    --tw-prose-quote-borders: #374151;
+    --tw-prose-captions: #9ca3af; /* figcaption 等 */
+    --tw-prose-code: #f9fafb; /* インラインcodeの文字色 */
+    --tw-prose-pre-code: inherit; /* ← pre内はShikiに任せる */
+    --tw-prose-pre-bg: transparent; /* ← pre背景は塗らない（既に手動で制御中） */
+  }
 }

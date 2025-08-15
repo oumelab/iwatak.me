@@ -11,6 +11,6 @@ export function ThemeProvider({ children, ...props }: ThemeProviderProps) {
     return () => setMounted(false);
   }, []);
   return (
-  mounted && <NextThemesProvider {...props}>{children}</NextThemesProvider>
+  mounted && <NextThemesProvider {...props}  attribute="class" defaultTheme="system" enableSystem>{children}</NextThemesProvider>
   ); 
 }

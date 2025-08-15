@@ -15,7 +15,7 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
   
 
   return (
-    <div className="prose prose-zinc dark:prose-invert max-w-3xl mx-auto">
+    <div className="prose prose-zinc max-w-3xl mx-auto">
     {post && (
       <> 
       <h1 className="text-[28px]">{post.title}</h1>

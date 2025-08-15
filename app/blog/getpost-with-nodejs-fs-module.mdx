@@ -1,7 +1,7 @@
-export const metadata ={
-  title: 'ブログ記事一覧の取得をNode.jsのfsモジュールで行う',
+export const metadata = {
+  title: "ブログ記事一覧の取得をNode.jsのfsモジュールで行う",
   createdAt: "2025-04-30",
-}
+};
 
 ブログ記事の一覧取得の実装を Node.js の `fs` モジュールを使って行うようにした。<br />
 
@@ -11,8 +11,7 @@ export const metadata ={
 が、参加している勉強会コミュニティで指摘されたのだけど、こういうのをハードコーディングというそうで、記事を追加するたびに手動でファイル名も追加する手間がかかり、ミスが発生しやすいとのこと。<br />
 確かに不安のある実装だったので、言われてみて納得。
 
-```ts
-// /data/post-slug.ts
+```ts caption="dat/post-slug.ts"
 export const postSlugs = {
   'test-post-1',
   'test-post-2',
@@ -21,55 +20,52 @@ export const postSlugs = {
 }
 ```
 
-```tsx
-// /data/post.ts
-import { Post } from '@/types/post';
-import { PostSlugs } from './post-slug';
+```ts caption="/data/post.ts"
+import {Post} from "@/types/post";
+import {PostSlugs} from "./post-slug";
 
 export const getAllPosts = async (): Promise<Post[]> => {
   return await Promise.all(PostSlugs.map(async (slug) => getPost(slug)));
 };
 
-export const getPostList = async (): Promise<Omit<Post, 'content'>[]> => {
-  const posts = await Promise.all(PostSlugs.map(async (slug) => {
-    const post = await import(`/app/blog/${slug}.mdx`);
-    const { title, createdAt } = post.metadata;
-    return {
-      slug,
-      title,
-      createdAt,
-    };
-  })
+export const getPostList = async (): Promise<Omit<Post, "content">[]> => {
+  const posts = await Promise.all(
+    PostSlugs.map(async (slug) => {
+      const post = await import(`/app/blog/${slug}.mdx`);
+      const {title, createdAt} = post.metadata;
+      return {
+        slug,
+        title,
+        createdAt,
+      };
+    })
   );
   return posts;
-}
+};
 ```
 
 ## 変更後のブログ記事一覧の取得方法
+
 コミュニティ主催の方にアドバイスをもらい、`Node.js` の `fs` モジュールでファイルを読み込む方法に変更。
 
 `fs` はファイルやディレクトリを操作するための `Node.js` 標準モジュールで、 `Node.js` 環境下の `Next.js` ではインストール不要で使用できる。<br />
 
 こちらが分かりやすかった。
 
-- [fs Module を分かりやすく解説 - JamstackとNext.jsをTypeScriptで学ぶ。 - 株式会社コムテ](https://www.commte.co.jp/learn-nextjs/fs-module)
-
-
+- [fs Module を分かりやすく解説 - Jamstack と Next.js を TypeScript で学ぶ。 - 株式会社コムテ](https://www.commte.co.jp/learn-nextjs/fs-module)
 
 今回は、ブログ記事ファイルを格納しているディレクトリのファイル名を取得するため、`fs` モジュールの `readdirSync` メソッドを使用。<br />
 ついでに、`date-fns` を導入して投稿日の降順ソートも実装した。
 
 以下、記事一覧と記事詳細を取得するコード全体。
 
-```ts
-// /data/post.ts
+```typescript collapsible caption="/data/post.ts"
 import "server-only";
 import {Post} from "@/types/post";
 import fs from "fs";
 import {notFound} from "next/navigation";
 import path from "path";
-import { compareDesc } from "date-fns";
-
+import {compareDesc} from "date-fns";
 
 // 投稿ディレクトリのパス
 const postsDirectory = path.join(process.cwd(), "/app/blog");
@@ -100,7 +96,10 @@ const getPostMetadata = async (
       createdAt,
     };
   } catch (error) {
-    console.error(`記事ファイル "${fileName}" のメタデータ取得に失敗しました:`, error);
+    console.error(
+      `記事ファイル "${fileName}" のメタデータ取得に失敗しました:`,
+      error
+    );
     throw error;
   }
 };
@@ -149,11 +148,13 @@ export const getAllPosts = async (): Promise<Omit<Post, "content">[]> => {
 ```
 
 ## まとめ
+
 まだキャッシュ戦略など課題はあるけど、ひとまずブログ記事の取得方法を変更した。<br />
 改善しながら理解の浅い部分を深掘りしていきたい。
 
 ## 参考
+
 - [File system | Node.js v23.11.0 Documentation](https://nodejs.org/api/fs.html)
-- [fs Module を分かりやすく解説 - JamstackとNext.jsをTypeScriptで学ぶ。 - 株式会社コムテ](https://www.commte.co.jp/learn-nextjs/fs-module)
-- [JavaScriptで日付が新しい順・古い順, あいうえお順のSort処理を実装してみた！](https://zenn.dev/aiq_dev/articles/16f82c32930c3c)
+- [fs Module を分かりやすく解説 - Jamstack と Next.js を TypeScript で学ぶ。 - 株式会社コムテ](https://www.commte.co.jp/learn-nextjs/fs-module)
+- [JavaScript で日付が新しい順・古い順, あいうえお順の Sort 処理を実装してみた！](https://zenn.dev/aiq_dev/articles/16f82c32930c3c)
 - [date-fns - modern JavaScript date utility library](https://date-fns.org/v4.1.0/docs/compareDesc)

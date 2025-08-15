@@ -19,8 +19,17 @@ const notoSansJp = Noto_Sans_JP({
 });
 
 export const metadata: Metadata = {
-  title: "iwatak.me",
+  title: {
+    template: "%s | iwatak.me",
+    default: "iwatak.me",
+  },
   description: "Web Development Learning Note",
+  openGraph: {
+    title: "iwatak.me",
+    description: "Web Development Learning Note",
+    url: "https://iwatak.me",
+    siteName: "iwatak.me",
+  },
 };
 
 export default function RootLayout({

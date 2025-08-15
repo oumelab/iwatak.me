@@ -1,4 +1,9 @@
 import Link from 'next/link'
+
+export const metadata = {
+  title: 'Not Found',
+  description: 'Not Found',
+}
  
 export default async function NotFound() {
 

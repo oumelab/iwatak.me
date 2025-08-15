@@ -1,6 +1,12 @@
 import { getAllPosts } from "@/data/post";
 import Pagination from "@/components/pagination";
 import PostList from "@/components/post-list";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Blog",
+  description: "Web開発の学習メモ",
+};
 
 export default async function Page() {
   const posts = await getAllPosts();

@@ -2,6 +2,14 @@ import { getPost } from "@/data/post";
 import { format, parse } from "date-fns";
 import { ja } from "date-fns/locale";
 
+export const generateMetadata = async ({ params }: { params: Promise<{ slug: string }> }) => {
+  const slug = (await params).slug;
+  const post = await getPost(slug);
+  return {
+    title: post?.title,
+  };
+};
+
 export default async function Page({ params }: { params: Promise<{ slug: string }> }) {
   const slug = (await params).slug;
   const post = await getPost(slug);

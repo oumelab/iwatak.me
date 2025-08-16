@@ -91,7 +91,7 @@ export default function Pre({children, ...props}: PreProps) {
           isCopied && "text-foreground bg-muted dark:text-white dark:bg-muted"
         )}
       >
-        {isCopied ? <Check className="text-white" /> : <Copy className="" />}
+        {isCopied ? <Check className="text-foreground dark:text-white" /> : <Copy className="" />}
       </Button>
 
       {/* 展開/折りたたみボタン（コードブロック内） */}

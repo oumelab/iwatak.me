@@ -2,8 +2,9 @@ import type {Metadata} from "next";
 import {Noto_Sans_JP} from "next/font/google";
 import "./globals.css";
 import Header from "@/components/header";
-import { ThemeProvider } from "@/components/theme-provider"
 import Footer from "@/components/footer";
+import {ThemeProvider} from "@/components/theme-provider";
+import {Analytics} from "@vercel/analytics/next";
 
 const notoSansJp = Noto_Sans_JP({
   subsets: ["latin"],
@@ -50,8 +51,11 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           <Header />
-          <main className="max-w-[800px] w-full mx-auto px-5 py-16">{children}</main>
+          <main className="max-w-[800px] w-full mx-auto px-5 py-16">
+            {children}
+          </main>
           <Footer />
+          <Analytics />
         </ThemeProvider>
       </body>
     </html>

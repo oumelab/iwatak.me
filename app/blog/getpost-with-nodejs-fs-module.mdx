@@ -11,7 +11,7 @@ export const metadata = {
 が、参加している勉強会コミュニティで指摘されたのだけど、こういうのをハードコーディングというそうで、記事を追加するたびに手動でファイル名も追加する手間がかかり、ミスが発生しやすいとのこと。<br />
 確かに不安のある実装だったので、言われてみて納得。
 
-```ts caption="dat/post-slug.ts"
+```ts caption="data/post-slug.ts"
 export const postSlugs = {
   'test-post-1',
   'test-post-2',
@@ -59,7 +59,7 @@ export const getPostList = async (): Promise<Omit<Post, "content">[]> => {
 
 以下、記事一覧と記事詳細を取得するコード全体。
 
-```typescript collapsible caption="/data/post.ts"
+```ts caption="/data/post.ts"
 import "server-only";
 import {Post} from "@/types/post";
 import fs from "fs";

@@ -33,8 +33,6 @@ export default function Pre({children, ...props}: PreProps) {
   useEffect(() => {
     if (preRef.current && isCollapsible) {
       const lineCount = preRef.current.textContent?.split("\n").length || 0;
-      console.log("Line count:", lineCount);
-      console.log("Should show toggle:", lineCount > MAX_LINES);
       setShouldShowToggle(lineCount > MAX_LINES);
     }
   }, [children, isCollapsible]);
@@ -57,8 +55,9 @@ export default function Pre({children, ...props}: PreProps) {
   };
 
   // 折りたたみ時の最大高さを計算
-  const maxHeight = MAX_LINES * LINE_HEIGHT + 32; // 32pxはパディング分
-
+  const padding = 32; // 32pxはパディング分
+  const maxHeight = MAX_LINES * LINE_HEIGHT + padding;
+  
   return (
     <div className="relative">
       <pre
